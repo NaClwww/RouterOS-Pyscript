@@ -54,7 +54,6 @@ COPY --from=builder /lib/ld-musl-$(cat /tmp/arch).so.1 /lib/ld-musl-$(cat /tmp/a
 COPY --from=builder /usr/lib/libpython${PYTHON_VERSION}.so.1.0 /usr/lib/libpython${PYTHON_VERSION}.so.1.0
 COPY --from=builder /usr.lib/python${PYTHON_VERSION}/ /usr.lib/python${PYTHON_VERSION}/
 COPY --from=builder /app/main.py /app/main.py
-COPY --from=builder /lib/libz.so.1 /lib/libz.so.1
 
 # 挂载scripts目录
 VOLUME /app/scripts
