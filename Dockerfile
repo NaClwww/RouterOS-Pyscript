@@ -32,14 +32,6 @@ RUN find . -name "*.cpython-*.opt-2.pyc" -exec sh -c 'mv "$1" "${1/__pycache__\/
 RUN find . -name "*.py" -delete
 RUN find . -name "__pycache__" -exec rm -r {} +
 
-# 压缩Python解释器和库文件
-RUN arch=$(cat /tmp/arch) && \
-    real_python=$(readlink -f /usr/bin/python3) && \
-    strip $real_python && upx --best $real_python && \
-    if [ -f /lib/ld-musl-${arch}.so.1]; then \
-        strip /lib/ld-musl-${arch}.so.1 && upx --best /lib/ld-musl-${arch}.so.1; \
-    fi
-
 # 第二阶段：创建最终镜像
 FROM --platform=$TARGETPLATFORM alpine
 ARG PYTHON_VERSION
