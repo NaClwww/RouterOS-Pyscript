@@ -3,9 +3,7 @@ import sys
 import asyncio
 import importlib.util
 import logging
-from concurrent.futures import ThreadPoolExecutor
 import librouteros
-
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -69,8 +67,6 @@ async def main():
     logger.info(f"Scaning Scripts:")
     
     await run_script(SCRIPT_DIR, api)
-
-
     
     # 关闭API连接
     api.close()
