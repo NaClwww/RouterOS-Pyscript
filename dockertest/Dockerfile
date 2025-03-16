@@ -27,7 +27,6 @@ ARG PYTHON_VERSION
 
 # 从构建阶段仅复制必要的运行时文件
 COPY --from=builder /usr/bin/python3 /
-COPY --from=builder /lib/ld-musl-x86_64.so.1 /lib/ld-musl-x86_64.so.1
 COPY --from=builder /usr/lib/libpython${PYTHON_VERSION}.so.1.0 /usr/lib/libpython${PYTHON_VERSION}.so.1.0
 COPY --from=builder /usr/lib/python${PYTHON_VERSION}/ /usr/lib/python${PYTHON_VERSION}/
 COPY --from=builder /app/main.py /app/main.py
