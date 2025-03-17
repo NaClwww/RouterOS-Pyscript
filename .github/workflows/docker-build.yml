@@ -36,6 +36,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push Docker image
+        id: docker_build
         uses: docker/build-push-action@v2
         with:
           context: .
@@ -45,3 +46,13 @@ jobs:
           tags: ${{ env.REGISTRY }}/${{ steps.lowercase.outputs.OWNER }}/${{ env.IMAGE_NAME }}:latest
           build-args: |
             BUILDKIT_INLINE_CACHE=1
+          outputs: type=image,name=${{ env.REGISTRY }}/${{ steps.lowercase.outputs.OWNER }}/${{ env.IMAGE_NAME }},name-only=true
+      
+      - name: Display image size
+        run: |
+          echo "正在拉取构建的镜像..."
+          docker pull ${{ env.REGISTRY }}/${{ steps.lowercase.outputs.OWNER }}/${{ env.IMAGE_NAME }}:latest
+          echo "镜像大小信息:"
+          docker images ${{ env.REGISTRY }}/${{ steps.lowercase.outputs.OWNER }}/${{ env.IMAGE_NAME }}:latest --format "{{.Repository}}:{{.Tag}} - {{.Size}}"
+          echo "详细信息:"
+          docker image inspect ${{ env.REGISTRY }}/${{ steps.lowercase.outputs.OWNER }}/${{ env.IMAGE_NAME }}:latest --format '{{.Size}} bytes (约 {{div .Size 1048576}} MB)'
