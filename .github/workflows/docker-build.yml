@@ -54,5 +54,3 @@ jobs:
           docker pull ${{ env.REGISTRY }}/${{ steps.lowercase.outputs.OWNER }}/${{ env.IMAGE_NAME }}:latest
           echo "镜像大小信息:"
           docker images ${{ env.REGISTRY }}/${{ steps.lowercase.outputs.OWNER }}/${{ env.IMAGE_NAME }}:latest --format "{{.Repository}}:{{.Tag}} - {{.Size}}"
-          echo "详细信息:"
-          docker image inspect ${{ env.REGISTRY }}/${{ steps.lowercase.outputs.OWNER }}/${{ env.IMAGE_NAME }}:latest --format '{{.Size}} bytes (约 {{div .Size 1048576}} MB)'
