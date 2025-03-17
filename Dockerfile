@@ -45,4 +45,4 @@ VOLUME /app/scripts
 WORKDIR /app
 
 # 容器启动命令
-ENTRYPOINT ["/usr/bin/python3", "/app/main.py"]
+ENTRYPOINT ["/python3", "/app/main.py"]
