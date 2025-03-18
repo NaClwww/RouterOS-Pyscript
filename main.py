@@ -73,12 +73,11 @@ async def main_async():
             logger.info(f"Connected to {ROUTER_IP}")
             break
         logger.error(f"Connected failed to {ROUTER_IP}")
-        await asyncio.sleep(5)  # 正确的异步等待
+        await asyncio.sleep(5)
     
     logger.info(f"Scanning Scripts:")
     await run_script(SCRIPT_DIR, api)
     
-    # 关闭API连接
     api.close()
 
 def main():
