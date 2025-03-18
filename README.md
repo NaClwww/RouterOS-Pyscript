@@ -66,8 +66,9 @@ async def Loop(api):
 ```
 
 ## To Do List
-
-
+ -[x] 支持从本地文件导入scripts
+ -[ ] 合理的多任务调度
+ -[ ] 支持热重载
 
 ## 项目参考
 
