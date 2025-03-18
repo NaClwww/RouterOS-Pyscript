@@ -12,13 +12,10 @@ logging.basicConfig(
 )
 logger = logging.getLogger("RouterOS-PyScript")
 
-# ROUTER_IP = os.getenv('ROUTER_IP')
-# USER = os.getenv('ROUTER_USER')
-# PASSWORD = os.getenv('ROUTER_PASS')
+ROUTER_IP = os.getenv('ROUTER_IP')
+USER = os.getenv('ROUTER_USER')
+PASSWORD = os.getenv('ROUTER_PASS')
 SCRIPT_DIR = "scripts"
-ROUTER_IP = "192.168.88.1"
-USER = "test"
-PASSWORD = "114514"
 
 
 async def run_script(script_path, api):
