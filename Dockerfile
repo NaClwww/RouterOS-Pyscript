@@ -1,3 +1,5 @@
+#Reference: https://github.com/CrafterKolyan/tiny-python-docker-image
+
 ARG PYTHON_VERSION=3.12
 
 FROM alpine AS builder
@@ -21,13 +23,9 @@ RUN find . -name "*.cpython-*.opt-2.pyc" | awk '{print $1, $1}' | sed 's/__pycac
 RUN find . -name "*.py" -delete
 RUN find . -name "__pycache__" -exec rm -r {} +
 
-# 使用UPX压缩Python解释器和共享库
-# RUN strip /usr/bin/python3 && \
-#     upx --best --lzma /usr/bin/python3
-
-# 压缩libpython共享库
-RUN strip /usr/lib/libpython${PYTHON_VERSION}.so.1.0 && \
-    upx --best --lzma /usr/lib/libpython${PYTHON_VERSION}.so.1.0 || true
+# 压缩libpython共享库,arm压了会导致无法运行
+# RUN strip /usr/lib/libpython${PYTHON_VERSION}.so.1.0 && \
+#     upx --best --lzma /usr/lib/libpython${PYTHON_VERSION}.so.1.0 || true
 
 FROM alpine
 ARG PYTHON_VERSION
