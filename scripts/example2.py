@@ -2,13 +2,13 @@ import asyncio
 import logging
 import sys
 
-SCRIPT_NAME = "example"
+SCRIPT_NAME = "example2"
 
 TRIGGER_TYPE = "interval" 
 TRIGGER_SECONDS = 5
 
 # 配置日志输出到控制台
-logger = logging.getLogger(SCRIPT_NAME) 
+logger = logging.getLogger(SCRIPT_NAME)
 logger.setLevel(logging.INFO)
 console_handler = logging.StreamHandler(sys.stdout)
 console_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))

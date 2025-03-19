@@ -12,7 +12,7 @@ RUN apk add --no-cache python3~=${PYTHON_VERSION} py3-pip
 COPY main.py /app/main.py
 
 # 安装必要库
-RUN pip install --no-cache-dir --break-system-packages librouteros && pip cache purge
+RUN pip install --no-cache-dir --break-system-packages librouteros APScheduler && pip cache purge
 WORKDIR /usr/lib/python${PYTHON_VERSION}/site-packages
 RUN python -m compileall -o 2 -b .
 
