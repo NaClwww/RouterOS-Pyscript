@@ -1,3 +1,4 @@
+import sys
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 import librouteros
 import asyncio
@@ -7,15 +8,15 @@ import os
 
 logger = logging.getLogger("scheduler")
 logger.setLevel(logging.INFO)
+console_handler = logging.StreamHandler(sys.stdout)
+console_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
+logger.addHandler(console_handler)
 
 ROUTER_IP = os.getenv('ROUTER_IP','172.17.0.1')
 USER = os.getenv('ROUTER_USER')
 PASSWORD = os.getenv('ROUTER_PASS')
-RELOAD_TIME = os.getenv('RELOAD_TIME','10')
+RELOAD_DETECT = os.getenv('RELOAD_DETECT','10')
 SCRIPT_DIR = "scripts"
-ROUTER_IP = '192.168.88.1'
-USER = 'test'
-PASSWORD = 'test'
 
 def get_api(username, password, routerip):
     try:
@@ -45,10 +46,12 @@ async def run_script(script_name, api):
         logger.error(f"Run {script_name} fail: {str(e)}")
     
     try:
-        scheduler.add_job(script_module.Loop, 'interval', seconds=script_module.TRIGGER_SECONDS, args=[api])
+        if script_module.TRIGGER_TYPE == "interval":
+            scheduler.add_job(script_module.Loop, 'interval', seconds=script_module.TRIGGER_SECONDS, args=[api])
+        # elif script_module.TRIGGER_TYPE == "cron":
+        #     scheduler.add_job(script_module.Loop, 'cron', second=script_module.TRIGGER_SECONDS, args=[api])
     except Exception as e:
         logger.error(f"Loop {script_name} fail: {str(e)}")
-
 
 async def stop_script(script_name):
     global scheduler
@@ -65,8 +68,8 @@ async def main_async():
             logger.info(f"connect success to {ROUTER_IP}")
             break
         else:
-            logger.error(f"connect fail, retry in {RELOAD_TIME} seconds")
-        await asyncio.sleep(int(RELOAD_TIME))
+            logger.error(f"connect fail, retry in {10} seconds")
+        await asyncio.sleep(int(10))
     
     # run scripts
     scripts_old = []
@@ -82,7 +85,7 @@ async def main_async():
             if script not in scripts_new:
                 await stop_script(script) 
         scripts_old = scripts_new
-        await asyncio.sleep(int(RELOAD_TIME))
+        await asyncio.sleep(int(RELOAD_DETECT))
 
 def check():
     if USER is None or PASSWORD is None:
