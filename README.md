@@ -65,12 +65,11 @@ async def Loop(api):
   
 ```
 
-## To Do List
- -[x] 支持从本地文件导入scripts
+### To Do List
 
- -[ ] 合理的多任务调度
- 
- -[ ] 支持热重载
+ -[x] 支持从本地文件导入scripts
+ -[x] 合理的多任务调度
+ -[x] 支持热重载
 
 ## 项目参考
 
